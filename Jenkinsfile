@@ -5,7 +5,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Checkout your source code from your Git repository
-                git url: 'https://github.com/yourusername/your-repo.git'
+                git url: 'https://github.com/spiral99/storder.git'
             }
         }
 
@@ -19,8 +19,8 @@ pipeline {
         stage('Run Robot Framework Tests') {
             steps {
                 // Run Robot Framework tests
-                sh 'python3 -m rflint --ignore LineTooLong StandingOrderGW UAT tests'
-                sh 'python3 -m robot.run --NoStatusRC --variable SERVER:${CT_SERVER} --outputdir log StandingOrderGW UAT tests/tests/'
+                sh 'python3 -m rflint --ignore LineTooLong  storder'
+                sh 'python3 -m robot.run --NoStatusRC --variable SERVER:${CT_SERVER} --outputdir log  storder/tests/'
                 sh 'python3 -m robot.rebot --merge --output log/output.xml -l log/report.html -r log/report.html'
             }
         }
