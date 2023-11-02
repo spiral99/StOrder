@@ -20,9 +20,8 @@ pipeline {
             steps {
                 // Run Robot Framework tests
                 sh 'python3 -m rflint --ignore LineTooLong StandingOrderGW UAT tests'
-                sh 'python3 -m robot.run — NoStatusRC — variable SERVER:${CT_SERVER} — outputdir log StandingOrderGW UAT tests/tests/'
-                sh 'python3 -m robot.rebot --merge --output log/output.xml -l log/report.html -r log/report.html
-                sh 'exit 0'
+                sh 'python3 -m robot.run --NoStatusRC --variable SERVER:${CT_SERVER} --outputdir log StandingOrderGW UAT tests/tests/'
+                sh 'python3 -m robot.rebot --merge --output log/output.xml -l log/report.html -r log/report.html'
             }
         }
     }
@@ -30,21 +29,21 @@ pipeline {
     post {
         always {
             // Archive test results and artifacts
-               script {
-		          step(
-			            [
-			              $class              : 'RobotPublisher',
-			              outputPath          : 'reports',
-			              outputFileName      : '**/output.xml',
-			              reportFileName      : '**/report.html',
-			              logFileName         : '**/log.html',
-			              disableArchiveOutput: false,
-			              passThreshold       : 50,
-			              unstableThreshold   : 40,
-			              otherFiles          : "**/*.png,**/*.jpg",
-			            ]
-		          )
-		       }
+            script {
+                step(
+                    [
+                        $class              : 'RobotPublisher',
+                        outputPath          : 'reports',
+                        outputFileName      : '**/output.xml',
+                        reportFileName      : '**/report.html',
+                        logFileName         : '**/log.html',
+                        disableArchiveOutput: false,
+                        passThreshold       : 50,
+                        unstableThreshold   : 40,
+                        otherFiles          : "**/*.png,**/*.jpg",
+                    ]
+                )
+            }
         }
     }
 }
