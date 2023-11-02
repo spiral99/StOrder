@@ -21,7 +21,7 @@ pipeline {
                 // Run Robot Framework tests
                 sh 'python3 -m rflint --ignore LineTooLong StandingOrderGW UAT tests'
                 sh 'python3 -m robot.run — NoStatusRC — variable SERVER:${CT_SERVER} — outputdir log StandingOrderGW UAT tests/tests/'
-                sh 'python3 -m robot.rebot --merge --output log/output.xml -l reports/log.html -r log/report.html
+                sh 'python3 -m robot.rebot --merge --output log/output.xml -l log/report.html -r log/report.html
                 sh 'exit 0'
             }
         }
